@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<!-- setting : mybatis 구동시 선언할 설정들을 작성하는 영역 -->
+	<settings>
+		<!-- 빈 값이 날아왔을때 null로 인식하라는구문 (무조건 대문자 NULL) -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+	<!-- typeAlias : VO/DTO 클래스의 풀클래스명을 단순화하는 별칭 -->
+	<typeAliases>
+		<typeAlias type="com.kh.mybatis.member.model.vo.Member" alias="Member" />
+	</typeAliases>
+	
+	<!-- environment : mybatis에서 연동할 DB정보들을 등록 -->
+	<environments default="development">
+		<environment id="development">
+			<!-- 
+				* transactionManager는 JDBC와 MANAGED 둘중 하나를 선택
+				- JDBC : 트랜잭션을 내가 직접 관리하겠다. (수동 commit)
+				- MANAGED : 트랜잭션의 권한을 넘기겠다. (자동 commit)
+			 -->
+			<transactionManager type="JDBC" />
+			
+			<!-- 
+				* dataSource는 POOLED와 UNPOOLED 둘중 하나를 선택
+				- POOLED : ConnectionPool 사용
+				- UNPOOLED : ConnectionPool 사용안함
+				> ConnectionPool : Connection 객체를 담아두는 영역.. 재사용!
+			 -->
+			<dataSource type="POOLED" >
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+				<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+				<property name="username" value="mybatis"/>
+				<property name="password" value="mybatis"/>
+			</dataSource>
+		</environment>	
+	</environments>
+	
+	<!-- * mapper : 실행할 sql문들을 기록해둔 mapper 파일들.. 등록! -->
+	<mappers>
+		<mapper resource="/mappers/member-mapper.xml" />
+	</mappers>
+	
+</configuration>
