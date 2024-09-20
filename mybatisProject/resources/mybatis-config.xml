@@ -13,6 +13,8 @@
 	<!-- typeAlias : VO/DTO 클래스의 풀클래스명을 단순화하는 별칭 -->
 	<typeAliases>
 		<typeAlias type="com.kh.mybatis.member.model.vo.Member" alias="Member" />
+		<typeAlias type="com.kh.mybatis.board.model.vo.Board" alias="Board" />
+		<typeAlias type="com.kh.mybatis.board.model.vo.Reply" alias="Reply" />
 	</typeAliases>
 	
 	<!-- environment : mybatis에서 연동할 DB정보들을 등록 -->
@@ -43,6 +45,7 @@
 	<!-- * mapper : 실행할 sql문들을 기록해둔 mapper 파일들.. 등록! -->
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml" />
+		<mapper resource="/mappers/board-mapper.xml" />
 	</mappers>
 	
 </configuration>
