@@ -97,4 +97,35 @@
            
 	</select>
 	
+	<select id="selectSearchList" resultMap="boardResultSet">
+		select 
+	           board_no
+	         , board_title
+	         , user_name
+	         , count
+	         , create_date
+		  from board 
+		  join member on (board_writer = user_no)
+		 where board.status = 'Y'
+		 
+		 	<choose>
+			 <when test="condition == 'writer'">
+			   and user_name
+			 </when>
+			 
+			 <when test="condition == 'title'">
+			   and board_title
+			 </when>
+			 
+			 <otherwise>
+			   and board_content
+			 </otherwise>
+			</choose>
+	           
+	           like '%' || #{keyword} || '%'
+           
+		 order 
+		    by board_no desc
+	</select>
+	
 </mapper>

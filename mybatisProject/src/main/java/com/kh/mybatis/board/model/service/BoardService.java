@@ -15,5 +15,6 @@ public interface BoardService {
 	Board selectBoard(int boardNo);
 	ArrayList<Reply> selectReplyList(int boardNo);
 	int selectSearchCount(HashMap<String, String> map);
+	ArrayList<Board> selectSearchList(HashMap<String, String> map, PageInfo pi);
 	
 }

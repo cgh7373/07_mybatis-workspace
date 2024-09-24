@@ -6,6 +6,7 @@
 		<head>
 			<meta charset="UTF-8">
 			<title>Insert title here</title>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 			<style>
 				#list-area {
 					border: 1px solid white;
@@ -42,10 +43,18 @@
 							<option value="writer">작성자</option>
 							<option value="content">내용</option>
 						</select>
-						<input type="text" name="keyword" />
+						<input type="text" name="keyword" value="${ keyword }"/>
 						<button type="submit">검색</button>
 					</form>
 				</div>
+				
+				<c:if test="${ not empty condition }">
+					<script>
+						$(function() {
+							$("#search-area option[value=${condition}]").attr("selected", true);
+						})
+					</script>
+				</c:if>
 
 				<br>
 
@@ -79,17 +88,38 @@
 
 				<div id="paging-area">
 
-					<c:if test="${ pi.currentPage ne 1 }">
-						<a href="list.bo?cPage=${pi.currentPage - 1}">[이전]</a>
-					</c:if>
-
-					<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-						<a href="list.bo?cPage=${p}">[${p}]</a>
-					</c:forEach>
-
-					<c:if test="${ pi.currentPage lt pi.maxPage }">
-						<a href="list.bo?cPage=${pi.currentPage + 1}">[다음]</a>
-					</c:if>
+					<c:choose>
+					
+						<c:when test="${ not empty keyword }">
+							<c:if test="${ pi.currentPage ne 1 }">
+								<a href="search.bo?cPage=${pi.currentPage - 1}&condition=${condition}&keyword=${keyword}">[이전]</a>
+							</c:if>
+		
+							<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+								<a href="search.bo?cPage=${p}&condition=${condition}&keyword=${keyword}">[${p}]</a>
+							</c:forEach>
+		
+							<c:if test="${ pi.currentPage lt pi.maxPage }">
+								<a href="search.bo?cPage=${pi.currentPage + 1}&condition=${condition}&keyword=${keyword}">[다음]</a>
+							</c:if>
+						</c:when>
+						
+						<c:otherwise>
+							<c:if test="${ pi.currentPage ne 1 }">
+								<a href="list.bo?cPage=${pi.currentPage - 1}">[이전]</a>
+							</c:if>
+		
+							<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+								<a href="list.bo?cPage=${p}">[${p}]</a>
+							</c:forEach>
+		
+							<c:if test="${ pi.currentPage lt pi.maxPage }">
+								<a href="list.bo?cPage=${pi.currentPage + 1}">[다음]</a>
+							</c:if>
+						</c:otherwise>
+						
+					</c:choose>
+					
 				</div>
 
 				<br><br>
